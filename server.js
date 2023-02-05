@@ -7,7 +7,7 @@ const helmet = require("helmet");
 
 //helment
 //app.use(helmet());
-//
+// new comment
 
 var corsOptions = {
   origin: "http://localhost:3000"
@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //app.use(express.static(__dirname + '/data')); // /data/6248b286797430fbc5b6dc65/16523331-8068-4255-9960-050848255960.webp
-
+//
 app.use(express.static('public')); 
 app.use('/data', express.static('data'));
 
