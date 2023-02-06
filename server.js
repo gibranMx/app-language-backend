@@ -38,7 +38,7 @@ db.mongoose
   })
   .then(() => {
     console.log("Successfully connect to MongoDB.");
-  
+    initial();
   })
   .catch(err => {
     console.error("Connection error", err);
@@ -100,7 +100,6 @@ require("./routes/proyect.routes")(app);
 require("./routes/typeUser.routes")(app);
 require("./routes/lesson.routes")(app);
 require("./routes/activity.routes")(app);
-require("./routes/user.routes")(app);
 require("./routes/question.routes")(app);
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);

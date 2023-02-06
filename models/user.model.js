@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const User = mongoose.model(
   "User",
   new mongoose.Schema({
@@ -10,17 +11,8 @@ const User = mongoose.model(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Role"
       }
-    ],
-
-        typeUser: 
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "TypeUser"
-    },
-
-  },
-  { timestamps: true }
-  )
-  
+    ]
+  })
 );
+
 module.exports = User;
