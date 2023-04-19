@@ -10,6 +10,8 @@ module.exports = app => {
     router.get("/lesson/:id",activities.findByLesson);
     // Delete a activities with id
     router.delete("/:id", activities.delete);
-
-   app.use('/api/activities', router);
+    // Update a Activities with id
+    router.put('/:id', activities.update);
+    
+   app.use('/api/activities', [authJwt.verifyToken, authJwt.isAdminTeacherOrStudent], router);
   };

@@ -11,13 +11,22 @@ module.exports = function(app) {
   });
 
   app.get("/api/test/all", controller.allAccess);
+  
 
   app.get("/api/test/user", [authJwt.verifyToken], controller.userBoard);
 
+  app.get("/api/test/student", [authJwt.verifyToken, authJwt.isStudent], controller.studentBoard);
+  
   app.get(
-    "/api/test/mod",
-    [authJwt.verifyToken, authJwt.isModerator],
-    controller.moderatorBoard
+    "/api/test/teach",
+    [authJwt.verifyToken, authJwt.isTeacher],
+    controller.teacherBoard
+  );
+
+  app.get(
+    "/api/test/eval",
+    [authJwt.verifyToken, authJwt.isEvaluator],
+    controller.evaluatorBoard
   );
 
   app.get(

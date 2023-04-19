@@ -13,10 +13,15 @@ exports.create = (req, res) => {
     // Create a Activity
     const activity = new Activity({
       title: req.body.title,
-      description: req.body.description,
-      instruccions: req.body.instruccions,
-      grammar: req.body.grammar,
-      material: req.body.material,
+      difficulty: req.body.difficulty,
+      type: req.body.type,
+      question: req.body.question,
+      matchPairs: req.body.matchPairs,
+      creator: req.body.creator,
+      isVisible: req.body.isVisible,
+      startDate: req.body.startDate,
+      endDate: req.body.endDate,
+      idTags: req.body.idTags,
       idLesson: req.body.idLesson
     });
     // Save Activity in the database
@@ -32,6 +37,7 @@ exports.create = (req, res) => {
         });
       });
   };
+
 // Retrieve all Activitys from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
@@ -48,7 +54,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-// buscar una lesson por Unidad 
+// buscar una lesson por Actividad 
 exports.findByLesson = (req, res) => {
   const id = req.params.id;
   Activity.find({ idLesson: id }).sort({ _id: -1 })
@@ -87,3 +93,28 @@ exports.delete = (req, res) => {
     });
 };
 
+// Update an Activity by the id in the request
+exports.update = (req, res) => {
+  // Validate request
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!"
+    });
+  }
+
+  const id = req.params.id;
+
+  Activity.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    .then(data => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot update Activity with id=${id}. Maybe Activity was not found!`
+        });
+      } else res.send({ message: "Activity was updated successfully." });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Activity with id=" + id
+      });
+    });
+};

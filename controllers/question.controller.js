@@ -12,11 +12,13 @@ exports.create = (req, res) => {
     title: req.body.title,
     image: req.body.image,
     isMultiple: req.body.isMultiple ? req.body.isMultiple : false,
-    difficulty: req.body.difficulty,
+    idCategory: req.body.idCategory,
     answers: req.body.answers,
-    idActivity: req.body.idActivity
+    isExpired: false
   
   });
+
+
   // Save question in the database
   question
     .save(question)
@@ -30,6 +32,8 @@ exports.create = (req, res) => {
       });
     });
 };
+
+
 // Retrieve all Questions from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
@@ -45,10 +49,10 @@ exports.findAll = (req, res) => {
       });
     });
 };
-// buscar una Question por Activity 
-exports.findByQuestion = (req, res) => {
+// buscar una Question por categoria 
+exports.findByCategory = (req, res) => {
   const id = req.params.id;
-  Question.find({ idActivity: id }).sort({ _id: -1 })
+  Question.find({ idCategory: id }).sort({ _id: -1 })
     .then(data => {
       if (!data)
         res.status(404).send({ message: "Not found Question with activity id " + id });
@@ -80,6 +84,32 @@ exports.delete = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: "Could not delete Question with id=" + id
+      });
+    });
+};
+
+// Update a Question by the id in the request
+exports.update = (req, res) => {
+  // Validate request
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty!"
+    });
+  }
+
+  const id = req.params.id;
+
+  Question.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    .then(data => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot update Question with id=${id}. Maybe Question was not found!`
+        });
+      } else res.send({ message: "Question was updated successfully." });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Question with id=" + id
       });
     });
 };

@@ -58,15 +58,25 @@ db.mongoose
   
           console.log("added 'user' to roles collection");
         });
-  
+
         new Role({
-          name: "moderator"
+          name: "student"
         }).save(err => {
           if (err) {
             console.log("error", err);
           }
   
-          console.log("added 'moderator' to roles collection");
+          console.log("added 'student' to roles collection");
+        });
+  
+        new Role({
+          name: "evaluator"
+        }).save(err => {
+          if (err) {
+            console.log("error", err);
+          }
+  
+          console.log("added 'evaluator' to roles collection");
         });
   
         new Role({
@@ -78,6 +88,17 @@ db.mongoose
   
           console.log("added 'admin' to roles collection");
         });
+
+        new Role({
+          name: "teacher"
+        }).save(err => {
+          if (err) {
+            console.log("error", err);
+          }
+  
+          console.log("added 'teacher' to roles collection");
+        });
+
       }
     });
   }
@@ -103,6 +124,10 @@ require("./routes/activity.routes")(app);
 require("./routes/question.routes")(app);
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
+require('./routes/category.routes')(app);
+require('./routes/subcategory.routes')(app);
+require('./routes/subject.routes')(app);
+require('./routes/tag.routes')(app);
 
 
 

@@ -6,10 +6,12 @@ module.exports = app => {
   router.post("/",questions.create);
   // Retrieve all questions
   router.get("/", questions.findAll);
-  // Retrieve a single question with id
-  router.get("/activity/:id",questions.findByQuestion);
+  // Retrieve a single question with id category
+  router.get("/activity/:id",questions.findByCategory);
   // Delete a questions with id
   router.delete("/:id", questions.delete);
+  // Update a questions with id
+  router.put('/:id', questions.update);
 
-  app.use('/api/questions',router);
+  app.use('/api/questions',[authJwt.isAdminTeacherOrStudent],router);
 };

@@ -51,7 +51,7 @@ isAdmin = (req, res, next) => {
   });
 };
 
-isModerator = (req, res, next) => {
+isEvaluator = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
@@ -69,13 +69,140 @@ isModerator = (req, res, next) => {
         }
 
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "moderator") {
+          if (roles[i].name === "Evaluator") {
             next();
             return;
           }
         }
 
-        res.status(403).send({ message: "Require Moderator Role!" });
+        res.status(403).send({ message: "Require Evaluator Role!" });
+        return;
+      }
+    );
+  });
+};
+
+isStudent = (req, res, next) => {
+  User.findById(req.userId).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    Role.find(
+      {
+        _id: { $in: user.roles }
+      },
+      (err, roles) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i].name === "student") {
+            next();
+            return;
+          }
+        }
+
+        res.status(403).send({ message: "Require student Role!" });
+        return;
+      }
+    );
+  });
+};
+
+
+
+isTeacher = (req, res, next) => {
+  User.findById(req.userId).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    Role.find(
+      {
+        _id: { $in: user.roles }
+      },
+      (err, roles) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i].name === "teacher") {
+            next();
+            return;
+          }
+        }
+
+        res.status(403).send({ message: "Require teacher Role!" });
+        return;
+      }
+    );
+  });
+};
+
+// funcion para proyecto, unidad y leccion
+isAdminOrTeacher= (req, res, next) => {
+  User.findById(req.userId).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    Role.find(
+      {
+        _id: { $in: user.roles }
+      },
+      (err, roles) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i].name === "teacher" || roles[i].name === "admin") {
+            next();
+            return;
+          }
+        }
+
+        res.status(403).send({ message: "Require teacher or admin Role!" });
+        return;
+      }
+    );
+  });
+};
+
+isAdminTeacherOrStudent= (req, res, next) => {
+  User.findById(req.userId).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+
+    Role.find(
+      {
+        _id: { $in: user.roles }
+      },
+      (err, roles) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+
+        for (let i = 0; i < roles.length; i++) {
+          if (roles[i].name === "teacher" || roles[i].name === "admin" || roles[i].name === "student") {
+            next();
+            return;
+          }
+        }
+
+        res.status(403).send({ message: "Require teacher or admin Role!" });
         return;
       }
     );
@@ -85,6 +212,12 @@ isModerator = (req, res, next) => {
 const authJwt = {
   verifyToken,
   isAdmin,
-  isModerator
+  isEvaluator,
+  isTeacher,
+  isStudent,
+  isAdminOrTeacher,
+  isAdminTeacherOrStudent
 };
 module.exports = authJwt;
+
+//crear una nueva funcion que se llame isAdmin y crear otra que se llame isStudent

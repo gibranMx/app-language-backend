@@ -11,5 +11,5 @@ module.exports = app => {
     // Delete a lessons with id
     router.delete("/:id", lessons.delete);
 
-    app.use('/api/lessons', router);
+    app.use('/api/lessons', [authJwt.verifyToken, authJwt.isAdminOrTeacher], router);
   };

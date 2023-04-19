@@ -11,6 +11,9 @@ db.activity = require("./activity.model");
 db.question = require("./question.model");
 db.user = require("./user.model");
 db.role = require("./role.model");
-db.ROLES = ["user", "admin", "moderator"];
+db.category = require("./category.model");
+db.subcategory = require("./subcategory.model");
+db.subject = require("./subject.model");
+db.ROLES = ["student", "admin", "evaluator", "teacher"];
 module.exports = db;
 //asdasd

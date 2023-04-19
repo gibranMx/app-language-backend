@@ -2,19 +2,40 @@ const mongoose = require("mongoose");
 const Question = mongoose.model(
   "Question",
   new mongoose.Schema({
-    title: String,
+    title: {
+      type: String,
+      required: true
+    },
     image: String,
-    isMultiple: false,
-    difficulty: Number,
-    idActivity:
+    isMultiple: {
+      type: Boolean,
+      default: false
+    },
+    idCategory:
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Activity"
+      ref: "Category"
     },
     answers: [
       {
-        title: String,
-        isCorrect: false
+        title: {
+          type: String,
+          required: true
+        },
+        isCorrect: {
+          type: Boolean,
+          default: false
+        },
+        image: {
+          type: String,
+          required: false,
+          default: null
+        }, // opcional
+        audio: {
+            type: String,
+            required: false,
+            default: null
+          }, // opcional
       }
     ],
     isExpired:false
@@ -25,4 +46,3 @@ const Question = mongoose.model(
 );
 
 module.exports = Question;
-

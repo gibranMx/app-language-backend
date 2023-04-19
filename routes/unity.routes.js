@@ -13,5 +13,5 @@ module.exports = app => {
   // Delete a unities with id
   router.delete("/:id", unities.delete);
 
- app.use('/api/unities', router);
+ app.use('/api/unities', [authJwt.verifyToken, authJwt.isAdminOrTeacher], router);
 };
