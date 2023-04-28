@@ -14,7 +14,6 @@ exports.create = (req, res) => {
     const lesson = new Lesson({
       title: req.body.title,
       description: req.body.description,
-      subject: req.body.subject,
       longdescription: req.body.longdescription,
       material: req.body.material,
       idUnity: req.body.idUnity

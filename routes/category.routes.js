@@ -16,6 +16,9 @@ module.exports = app => {
     router.delete('/categories/:id', categories.delete); // Nueva ruta
     // Update a category with id
     router.put("/:id", categories.update);
+    // Find a category by name (either parent or child)
+    router.get("/:name", categories.findByName);
+    
 
     app.use('/api/categories', [authJwt.verifyToken, authJwt.isAdminOrTeacher], router);
   };

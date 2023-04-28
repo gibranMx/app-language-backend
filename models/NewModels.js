@@ -52,20 +52,46 @@ const mongoose = require("mongoose");
 const Question = mongoose.model(
   "Question",
   new mongoose.Schema({
-    title: {
+    title: { // Do I have 25 years old?
       type: String,
       required: true
     },
-    image: String,
+    image: String, //image.png
     isMultiple: {
       type: Boolean,
       default: false
     },
-    idCategory:
+    /*
+    isLanguageQuestion: {
+      type: Boolean,
+      default: false
+    },*/
+    category:
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Category"
+      ref: "Cateogry"
     },
+    audio:
+    {
+      type: String, // adio 1 min assets/adio/audio.mp3
+      default: null
+    },
+    startAudio:
+    {
+      type: Number, // 00.01s
+      default: null
+    },
+    endAudio:
+    {
+      type: Number,// 10.00s
+      default: null
+    },
+    translations: [ //[34234234234,234234234,234234234,234234234]
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Translation"
+      }
+    ],
     answers: [
       {
         title: {
@@ -86,6 +112,16 @@ const Question = mongoose.model(
             required: false,
             default: null
           }, // opcional
+        startAudio:
+          {
+            type: Number, // 00.01s
+            default: null
+          },
+        endAudio:
+          {
+            type: Number,// 10.00s
+            default: null
+          },
       }
     ],
     isExpired:false
@@ -96,6 +132,76 @@ const Question = mongoose.model(
 );
 
 module.exports = Question;
+
+
+//TRANSLATION
+const mongoose = require('mongoose');
+
+const translationSchema = new mongoose.Schema({
+  phrase: { 
+  type: String,
+  required: true
+ },
+
+  language: { 
+  type: String,
+  required: true 
+ },
+  translation: { 
+  type: String,
+  required: true 
+ },
+  audio: { 
+  type: String,
+  required: false 
+ },
+  audioStart: {
+  type: Number,
+  required: false
+ },
+  audioEnd: {
+  type: Number,
+  required: false 
+ },
+  image: {
+  type: String,
+  required: false }
+});
+
+const Translation = mongoose.model('Translation', translationSchema);
+
+module.exports = Translation;
+
+
+//MATCH PAIRS
+const mongoose = require("mongoose");
+
+const MatchPairs = new mongoose.model({
+    title: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
+    },
+    pairs: [ //12, 2,3,4
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Translation",
+            required: true,
+          },
+    ],
+    isExpired: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = MatchPairs;
 
 // ACTIVITY
 const mongoose = require('mongoose');
@@ -131,19 +237,12 @@ const activitySchema = new mongoose.Schema({
   },
   createdAt: { type: Date, default: Date.now }, //
   isVisible: { type: Boolean, default: false },
-  startDate: Date, // no seguro
-  endDate: Date, // noseguro
-  idTags: [
+  tags: [
     {
       type: mongoose.Schema.Types.ObjectId, // 2389234, 23sakjdha, kjasd12
       ref: 'Tag'
     }
-  ],
-  idLesson: 
-  {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Lesson"
-  },
+  ]
 });
 
 const Activity = mongoose.model('Activity', activitySchema);
@@ -152,10 +251,10 @@ module.exports = Activity;
 
 
 
-
+/*
 
 // MATCH PAIRS
-/*const matchPairsSchema = new mongoose.Schema({
+const matchPairsSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true
@@ -185,9 +284,9 @@ module.exports = Activity;
 }, {
   timestamps: true
 });
+
+
 */
-
-
 
 
 

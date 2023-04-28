@@ -14,18 +14,18 @@ const activitySchema = new mongoose.Schema({
     type: String,
     enum: ['question', 'matchPairs']
   },
-  question: {
+  idQuestion: {
     type: mongoose.Schema.Types.ObjectId, //null
     ref: 'Question',
     default: null
   },
-  matchPairs: {
+  idMatchPairs: {
     type: mongoose.Schema.Types.ObjectId, // null
     ref: 'MatchPairs',
     default: null
   },
   
-  creator: {
+  idUser: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },

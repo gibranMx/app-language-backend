@@ -4,7 +4,6 @@ const Lesson = mongoose.model(
   new mongoose.Schema({
     title: String,
     description: String,
-    subject: String,
     longdescription: String,
     material: String,
     //una leccion puede crear muchas actividades

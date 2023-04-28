@@ -7,11 +7,11 @@ module.exports = app => {
   // Retrieve all questions
   router.get("/", questions.findAll);
   // Retrieve a single question with id category
-  router.get("/activity/:id",questions.findByCategory);
+  router.get("/category/:id",questions.findByCategory);
   // Delete a questions with id
   router.delete("/:id", questions.delete);
   // Update a questions with id
   router.put('/:id', questions.update);
 
-  app.use('/api/questions',[authJwt.isAdminTeacherOrStudent],router);
+  app.use('/api/questions',[authJwt.verifyToken, authJwt.isAdminOrTeacher], router);
 };

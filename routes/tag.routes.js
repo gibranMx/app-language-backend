@@ -10,7 +10,7 @@ module.exports = app => {
     router.get("/category/:id", tags.findByCategory);
     // Delete a tags with id
     router.delete("/:id", tags.delete);
-    // Update a Tag with id
+    // Update a tags with id
     router.put('/:id', tags.update);
 
 

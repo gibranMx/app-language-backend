@@ -16,6 +16,27 @@ const Question = mongoose.model(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category"
     },
+    audio:
+    {
+      type: String, // adio 1 min assets/adio/audio.mp3
+      default: null
+    },
+    startAudio:
+    {
+      type: Number, // 00.01s
+      default: null
+    },
+    endAudio:
+    {
+      type: Number,// 10.00s
+      default: null
+    },
+    idTranslations: [ //[34234234234,234234234,234234234,234234234]
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Translation"
+      }
+    ],
     answers: [
       {
         title: {
@@ -36,6 +57,16 @@ const Question = mongoose.model(
             required: false,
             default: null
           }, // opcional
+          startAudio:
+          {
+            type: Number, // 00.01s
+            default: null
+          },
+        endAudio:
+          {
+            type: Number,// 10.00s
+            default: null
+          },
       }
     ],
     isExpired:false

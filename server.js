@@ -128,6 +128,8 @@ require('./routes/category.routes')(app);
 require('./routes/subcategory.routes')(app);
 require('./routes/subject.routes')(app);
 require('./routes/tag.routes')(app);
+require('./routes/translation.routes')(app);
+require('./routes/matchpairs.routes')(app);
 
 
 

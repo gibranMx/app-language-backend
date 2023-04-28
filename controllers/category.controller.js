@@ -50,31 +50,6 @@ exports.findAll = (req, res) => {
 
 
 
-// Delete a lesson with the specified id in the request
-exports.delete = (req, res) => {
-  const id = req.params.id;
-  Category.findByIdAndRemove(id)
-    .then(data => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot category lesson with id=${id}. Maybe category was not found!`
-        });
-      } else {
-        res.send({
-          message: "category was deleted successfully!"
-        });
-      }
-    })
-    .catch(err => {
-      res.status(500).send({
-        message: "Could not delete category with id=" + id
-      });
-    });
-};
-
-
-
-
 
 // Get all categories where parentCategory is null
 exports.findAllWithoutParent = (req, res) => {
@@ -181,6 +156,23 @@ exports.update = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: "Error retrieving category with id=" + id
+      });
+    });
+};
+
+
+// Find a category by name (either parent or child)
+exports.findByName = (req, res) => {
+  const categoryName = req.params.name;
+  Category.findOne({ title: categoryName })
+    .populate('parentCategory')
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || `Error retrieving category with name ${categoryName}.`
       });
     });
 };

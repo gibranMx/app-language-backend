@@ -14,6 +14,9 @@ db.role = require("./role.model");
 db.category = require("./category.model");
 db.subcategory = require("./subcategory.model");
 db.subject = require("./subject.model");
+db.tag = require("./tag.model");
+db.translation = require("./translation.model");
+db.matchpairs = require("./matchpairs.model");
 db.ROLES = ["student", "admin", "evaluator", "teacher"];
 module.exports = db;
 //asdasd

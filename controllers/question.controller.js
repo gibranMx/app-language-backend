@@ -13,6 +13,10 @@ exports.create = (req, res) => {
     image: req.body.image,
     isMultiple: req.body.isMultiple ? req.body.isMultiple : false,
     idCategory: req.body.idCategory,
+    audio: req.body.audio ? req.body.audio : null,
+    startAudio: req.body.startAudio ? req.body.startAudio : null,
+    endAudio: req.body.endAudio ? req.body.endAudio : null,
+    idTranslations: req.body.idTranslations ? req.body.idTranslations : [],
     answers: req.body.answers,
     isExpired: false
   
